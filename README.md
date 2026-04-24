@@ -49,7 +49,7 @@ I enjoy working across **AI, Web Development, and Problem Solving**.
 </div>
 
 # Currently Exploring:
-- Data Structures & Algorithms (LeetCode grind ⚡)
+- Data Structures & Algorithms
 - Full Stack Development
 - AI & ML basics
   
