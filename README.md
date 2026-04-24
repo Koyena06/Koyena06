@@ -35,7 +35,7 @@ I enjoy working across **AI, Web Development, and Problem Solving**.
 <div align="center">
 
 <img src="https://github-readme-stats.shion.dev/api?username=Koyena06&theme=rose&hide_border=false&include_all_commits=false&count_private=false" height="160"/>
-
+<p>&nbsp</p>
 <img src="https://streak-stats.demolab.com/?user=Koyena06&theme=rose&hide_border=false" height="160"/>
 
 </div>
@@ -55,3 +55,4 @@ I enjoy working across **AI, Web Development, and Problem Solving**.
   
 # Connect With Me:
 - GitHub: https://github.com/Koyena06
+- LinkedIn: linkedin.com/in/koyena-sutradhar-908158308
