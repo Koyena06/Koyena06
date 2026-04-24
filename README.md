@@ -1,6 +1,5 @@
 # About Me:
-Hi, I'm a **B.Tech CSE student** passionate about building tech that makes life easier.  
-I enjoy working across **AI, Web Development, and Problem Solving**.
+Hi, I'm a B.Tech CSE student passionate about building tech that makes life easier. I enjoy working across **AI, Web Development, and Problem Solving**.
 
 # Tech Stack:
 <div align="center">
@@ -56,3 +55,4 @@ I enjoy working across **AI, Web Development, and Problem Solving**.
 # Connect With Me:
 - GitHub: https://github.com/Koyena06
 - LinkedIn: https://www.linkedin.com/in/koyena-sutradhar-908158308
+- E mail: koyena.sutradhar@gmail.com
