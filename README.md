@@ -50,7 +50,8 @@ Hi, I'm a B.Tech CSE student passionate about building tech that makes life easi
 # Currently Exploring:
 - Data Structures & Algorithms
 - Full Stack Development
-- AI & ML basics
+- Cloud Computing
+- Operating Systems
   
 # Connect With Me:
 - GitHub: https://github.com/Koyena06
