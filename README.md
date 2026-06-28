@@ -1,5 +1,5 @@
 # About Me:
-Hi, I'm a B.Tech CSE student passionate about building tech that makes life easier. I enjoy working across **AI, Web Development, and Problem Solving**.
+Hi, I'm a B.Tech CSE student passionate about building tech that makes life easier. I enjoy working across **Full Stack Development, Cloud, AI and Problem Solving**.
 
 # Tech Stack:
 <div align="center">
