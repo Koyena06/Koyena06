@@ -54,6 +54,6 @@ Hi, I'm a B.Tech CSE student passionate about building tech that makes life easi
 - Operating Systems
   
 # Connect With Me:
-- GitHub: https://github.com/Koyena06
+- Portfolio: https://koyena-sutradhar-portfolio.vercel.app
 - LinkedIn: https://www.linkedin.com/in/koyena-sutradhar-908158308
 - E mail: koyena.sutradhar@gmail.com
