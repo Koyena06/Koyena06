@@ -32,13 +32,13 @@ Hi, I'm a B.Tech CSE student passionate about building tech that makes life easi
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=Koyena06&theme=radical&hide_border=false&include_all_commits=true&count_private=true" height="160"/>
-<text>&nbsp</text>
-<img src="https://streak-stats.demolab.com/?user=Koyena06&theme=rose&hide_border=false" height="160"/>
-</div>
-<br/>
-<div align="center">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Koyena06&theme=rose&hide_border=false&layout=compact" height="160"/>
+<img src="https://github-readme-stats-sigma-five.vercel.app/api?username=Koyena06&show_icons=true&theme=rose_pine&hide_border=true&include_all_commits=true&count_private=true" height="160"/>
+
+<img src="https://streak-stats.demolab.com?user=Koyena06&theme=rose-pine&hide_border=true" height="160"/>
+
+<br><br>
+
+<img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=Koyena06&layout=compact&theme=rose_pine&hide_border=true" height="160"/>
 
 </div>
 
