@@ -14,28 +14,99 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch stats images
+      - name: Fetch streak image
         run: |
           mkdir -p stats
+          for i in 1 2 3 4 5; do
+            if curl -fsSL --max-time 60 "https://streak-stats.demolab.com?user=Koyena06&theme=rose-pine&hide_border=true" -o tmp.svg \
+               && grep -q "<svg" tmp.svg; then
+              mv tmp.svg stats/streak.svg
+              echo "Updated streak.svg"
+              break
+            fi
+            sleep 20
+          done
 
-          fetch() {
-            url="$1"; out="$2"
-            for i in 1 2 3 4 5; do
-              if curl -fsSL --max-time 60 "$url" -o tmp.svg \
-                 && grep -q "<svg" tmp.svg \
-                 && ! grep -qiE "something went wrong|rate limit" tmp.svg; then
-                mv tmp.svg "$out"
-                echo "Updated $out"
-                return 0
-              fi
-              sleep 20
-            done
-            echo "Failed to update $out, keeping the old one"
-          }
+      - name: Generate stats and languages images
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: Koyena06
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.parse
+          from collections import Counter
 
-          fetch "https://github-readme-stats-sigma-five.vercel.app/api?username=Koyena06&show_icons=true&theme=rose_pine&hide_border=true&include_all_commits=true&count_private=true" stats/stats.svg
-          fetch "https://streak-stats.demolab.com?user=Koyena06&theme=rose-pine&hide_border=true" stats/streak.svg
-          fetch "https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=Koyena06&layout=compact&theme=rose_pine&hide_border=true" stats/top-langs.svg
+          USER = os.environ["GH_USER"]
+          TOKEN = os.environ["GH_TOKEN"]
+          FONT = "Segoe UI, Ubuntu, sans-serif"
+
+          def api(url):
+              if url.startswith("/"):
+                  url = "https://api.github.com" + url
+              req = urllib.request.Request(url, headers={
+                  "Authorization": "Bearer " + TOKEN,
+                  "Accept": "application/vnd.github+json",
+              })
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)
+
+          def count(path, q):
+              return api(path + "?per_page=1&q=" + urllib.parse.quote(q))["total_count"]
+
+          repos, page = [], 1
+          while True:
+              batch = api(f"/users/{USER}/repos?per_page=100&type=owner&page={page}")
+              repos += batch
+              if len(batch) < 100:
+                  break
+              page += 1
+
+          stars = sum(r["stargazers_count"] for r in repos)
+          commits = count("/search/commits", f"author:{USER}")
+          prs = count("/search/issues", f"author:{USER} type:pr")
+          issues = count("/search/issues", f"author:{USER} type:issue")
+
+          langs = Counter()
+          for r in repos:
+              if r["fork"]:
+                  continue
+              try:
+                  langs.update(api(r["languages_url"]))
+              except Exception:
+                  pass
+
+          def card(w, h, body):
+              return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">'
+                      f'<rect x="0.5" y="0.5" width="{w-1}" height="{h-1}" rx="4.5" fill="#191724"/>{body}</svg>')
+
+          def text(x, y, s, size, fill, weight=400):
+              return (f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" '
+                      f'fill="{fill}" font-family="{FONT}">{s}</text>')
+
+          os.makedirs("stats", exist_ok=True)
+
+          rows = [("Total Stars", stars), ("Total Commits", commits), ("Total PRs", prs),
+                  ("Total Issues", issues), ("Public Repos", len(repos))]
+          body = text(25, 35, USER + "'s GitHub Stats", 18, "#9CCFD8", 700)
+          for i, (label, val) in enumerate(rows):
+              y = 70 + i * 26
+              body += text(25, y, label, 14, "#E0DEF4")
+              body += text(300, y, str(val), 14, "#EBBCBA", 700)
+          open("stats/stats.svg", "w").write(card(495, 195, body))
+
+          colors = ["#9CCFD8", "#EBBCBA", "#C4A7E7", "#F6C177", "#EB6F92", "#31748F"]
+          total = sum(langs.values()) or 1
+          body = text(25, 35, "Top Languages", 18, "#9CCFD8", 700)
+          for i, (name, b) in enumerate(langs.most_common(6)):
+              y = 62 + i * 22
+              pct = b / total * 100
+              body += text(25, y, name, 12, "#E0DEF4")
+              body += text(275, y, f"{pct:.1f}%", 12, "#E0DEF4")
+              body += f'<rect x="25" y="{y+5}" width="250" height="6" rx="3" fill="#26233A"/>'
+              body += f'<rect x="25" y="{y+5}" width="{max(250*pct/100, 3):.1f}" height="6" rx="3" fill="{colors[i]}"/>'
+          open("stats/top-langs.svg", "w").write(card(300, 195, body))
+          print("Generated stats.svg and top-langs.svg")
+          PY
 
       - name: Commit changes
         run: |
