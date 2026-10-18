@@ -32,11 +32,15 @@ Hi, I'm a B.Tech CSE student passionate about building tech that makes life easi
 
 <div align="center">
 
-<img src="./stats/stats.svg" height="160"/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./stats/streak.svg" height="160"/>
-<br><br>
-<img src="./stats/top-langs.svg" height="160"/>
+<table>
+<tr>
+<td><img src="./stats/stats.svg" width="400"/></td>
+<td><img src="./stats/top-langs.svg" width="320"/></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><img src="./stats/streak.svg" width="500"/></td>
+</tr>
+</table>
 
 </div>
 

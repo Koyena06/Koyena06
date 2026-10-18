@@ -79,9 +79,9 @@ jobs:
               return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">'
                       f'<rect x="0.5" y="0.5" width="{w-1}" height="{h-1}" rx="4.5" fill="#191724"/>{body}</svg>')
 
-          def text(x, y, s, size, fill, weight=400):
+          def text(x, y, s, size, fill, weight=400, anchor="start"):
               return (f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" '
-                      f'fill="{fill}" font-family="{FONT}">{s}</text>')
+                      f'text-anchor="{anchor}" fill="{fill}" font-family="{FONT}">{s}</text>')
 
           os.makedirs("stats", exist_ok=True)
 
@@ -91,7 +91,7 @@ jobs:
           for i, (label, val) in enumerate(rows):
               y = 70 + i * 26
               body += text(25, y, label, 14, "#E0DEF4")
-              body += text(300, y, str(val), 14, "#EBBCBA", 700)
+              body += text(470, y, str(val), 14, "#EBBCBA", 700, "end")
           open("stats/stats.svg", "w").write(card(495, 195, body))
 
           colors = ["#9CCFD8", "#EBBCBA", "#C4A7E7", "#F6C177", "#EB6F92", "#31748F"]
@@ -101,10 +101,10 @@ jobs:
               y = 62 + i * 22
               pct = b / total * 100
               body += text(25, y, name, 12, "#E0DEF4")
-              body += text(275, y, f"{pct:.1f}%", 12, "#E0DEF4")
-              body += f'<rect x="25" y="{y+5}" width="250" height="6" rx="3" fill="#26233A"/>'
-              body += f'<rect x="25" y="{y+5}" width="{max(250*pct/100, 3):.1f}" height="6" rx="3" fill="{colors[i]}"/>'
-          open("stats/top-langs.svg", "w").write(card(300, 195, body))
+              body += text(305, y, f"{pct:.1f}%", 12, "#E0DEF4", 400, "end")
+              body += f'<rect x="25" y="{y+5}" width="280" height="6" rx="3" fill="#26233A"/>'
+              body += f'<rect x="25" y="{y+5}" width="{max(280*pct/100, 3):.1f}" height="6" rx="3" fill="{colors[i]}"/>'
+          open("stats/top-langs.svg", "w").write(card(330, 195, body))
           print("Generated stats.svg and top-langs.svg")
           PY
 
@@ -114,4 +114,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add stats
           git diff --cached --quiet || git commit -m "chore: update stats"
+          git pull --rebase
           git push
